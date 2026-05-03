@@ -493,14 +493,14 @@ Cada sprint = una rama feature, idealmente 1 PR por sub-tarea.
 
 ### Sprint 0: Foundation
 
-- [ ] `pyproject.toml` con uv, ruff, mypy, pytest configurados
-- [ ] Pre-commit hooks instalados
-- [ ] FastAPI con `/health` y `/version`
-- [ ] structlog configurado
-- [ ] Pydantic Settings con `.env`
-- [ ] HTTP Basic Auth funcional
-- [ ] Docker + docker-compose con Postgres
-- [ ] GitHub Actions con lint + typecheck + tests
+- [x] `pyproject.toml` con uv, ruff, mypy, pytest configurados
+- [x] Pre-commit hooks instalados
+- [x] FastAPI con `/health` y `/version`
+- [x] structlog configurado
+- [x] Pydantic Settings con `.env`
+- [x] HTTP Basic Auth funcional
+- [x] Docker + docker-compose con Postgres
+- [x] GitHub Actions con lint + typecheck + tests
 
 ### Sprint 1: Modelos y migraciones ✓
 
@@ -516,12 +516,12 @@ Cada sprint = una rama feature, idealmente 1 PR por sub-tarea.
 - [x] `core/money.py` con helpers + tests
 - [x] `core/exceptions.py` con jerarquía del dominio
 
-### Sprint 3: Metadata service
+### Sprint 3: Metadata service ✓
 
-- [ ] Cliente Google Books con retry + timeout
-- [ ] Cliente Open Library como fallback
-- [ ] Servicio `book_metadata.py` con normalización
-- [ ] Tests con fixtures reales (en `tests/fixtures/`)
+- [x] Cliente Google Books con retry + timeout
+- [x] Cliente Open Library como fallback
+- [x] Servicio `book_metadata.py` con normalización
+- [x] Tests con fixtures reales (en `tests/fixtures/`)
 
 ### Sprint 4: Scraping ML
 
@@ -654,5 +654,5 @@ Cada sprint = una rama feature, idealmente 1 PR por sub-tarea.
 
 ---
 
-**Última actualización:** Sprint 2 (core utilities: isbn.py, money.py, exceptions.py)
+**Última actualización:** Sprint 3 (metadata service: book_metadata.py, GoogleBooksClient, OpenLibraryClient)
 **Versión del CLAUDE.md:** 1.0
