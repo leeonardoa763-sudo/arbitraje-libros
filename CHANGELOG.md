@@ -6,6 +6,16 @@ Versiones siguen [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Agregado — Sprint 1: Modelos y Schemas
+
+- Modelos SQLAlchemy 2.0 async: `Book`, `Opportunity`, `Publication`, `PriceHistory`
+- Enums de dominio: `BookCategory`, `MetadataSource`, `OpportunityStatus`, `PublicationStatus`, `Platform`
+- Constraint de deduplicación `uq_opportunity_dedup` en `Opportunity` (book_id + source_url + source_price_cents)
+- Schemas Pydantic v2: `BookCreate/Read/Update`, `OpportunityCreate/Read/StatusUpdate/AIUpdate`, `PublicationCreate/Read/StatusUpdate`
+- Validación de ISBN-13 (13 dígitos), ISBN-10 (10 chars con posible X final), ai_score (0-100), precios no negativos
+- `alembic/env.py` actualizado para registrar todos los modelos en `Base.metadata`
+- 50+ tests unitarios para modelos (enums, instanciación, constraints) y schemas (validación de campos)
+
 ### Agregado — Sprint 0: Fundación
 
 - FastAPI con endpoints `/health` y `/version`

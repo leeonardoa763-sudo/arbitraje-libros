@@ -59,4 +59,4 @@ def get_settings() -> Settings:
     Si falta alguna variable obligatoria, Pydantic lanza ValidationError
     y la app no arranca — comportamiento intencional.
     """
-    return Settings()  # type: ignore[call-arg]
+    return Settings()

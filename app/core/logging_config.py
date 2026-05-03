@@ -25,10 +25,7 @@ def configure_logging(*, log_level: str = "INFO", log_json: bool = False) -> Non
     ]
 
     renderer: Any
-    if log_json:
-        renderer = structlog.processors.JSONRenderer()
-    else:
-        renderer = structlog.dev.ConsoleRenderer()
+    renderer = structlog.processors.JSONRenderer() if log_json else structlog.dev.ConsoleRenderer()
 
     structlog.configure(
         processors=[*shared_processors, renderer],

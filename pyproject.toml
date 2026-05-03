@@ -80,6 +80,7 @@ select = [
 ignore = [
     "E501",  # line too long (formatter handles it)
     "S101",  # assert OK in tests
+    "B008",  # Depends() en parámetros FastAPI es intencional
 ]
 
 [tool.ruff.lint.per-file-ignores]

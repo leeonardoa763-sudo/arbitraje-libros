@@ -17,8 +17,9 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-from app.config import get_settings  # noqa: E402
-from app.models.base import Base  # noqa: E402
+import app.models  # noqa: F401  — registra todos los modelos con Base.metadata
+from app.config import get_settings
+from app.models import Base
 
 target_metadata = Base.metadata
 
