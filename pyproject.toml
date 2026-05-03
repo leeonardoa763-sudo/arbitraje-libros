@@ -1,0 +1,164 @@
+[project]
+name = "arbitraje-libros"
+version = "0.1.0"
+description = "Detección de oportunidades de arbitraje de libros usados en Mercado Libre México"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "Proprietary" }
+authors = [{ name = "Leo" }]
+
+dependencies = [
+    # Web framework
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "jinja2>=3.1.4",
+    "python-multipart>=0.0.12",
+    # Database
+    "sqlalchemy[asyncio]>=2.0.36",
+    "asyncpg>=0.30.0",
+    "alembic>=1.14.0",
+    # Validation y settings
+    "pydantic>=2.9.2",
+    "pydantic-settings>=2.6.0",
+    # HTTP client y scraping
+    "httpx>=0.27.2",
+    "selectolax>=0.3.27",
+    "tenacity>=9.0.0",
+    # Tareas programadas
+    "apscheduler>=3.10.4",
+    # IA
+    "anthropic>=0.39.0",
+    # Auth & seguridad
+    "passlib[bcrypt]>=1.7.4",
+    # Logging
+    "structlog>=24.4.0",
+    # Utilidades
+    "python-dotenv>=1.0.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.3",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=6.0.0",
+    "pytest-mock>=3.14.0",
+    "ruff>=0.7.1",
+    "mypy>=1.13.0",
+    "pre-commit>=4.0.1",
+    "types-passlib>=1.7.7",
+    "httpx>=0.27.2", # Para TestClient
+]
+
+# =============================================================================
+# RUFF — lint + format
+# =============================================================================
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["alembic/versions"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # flake8-bugbear
+    "C4",   # flake8-comprehensions
+    "UP",   # pyupgrade
+    "N",    # pep8-naming
+    "SIM",  # flake8-simplify
+    "TID",  # flake8-tidy-imports
+    "RUF",  # ruff-specific
+    "S",    # flake8-bandit (security)
+    "T20",  # flake8-print (NO print)
+    "PT",   # pytest style
+    "RET",  # flake8-return
+    "PTH",  # use pathlib
+    "ERA",  # eradicate (no commented-out code)
+]
+ignore = [
+    "E501",  # line too long (formatter handles it)
+    "S101",  # assert OK in tests
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101", "S105", "S106"]
+"alembic/env.py" = ["E402"]
+"scripts/**/*.py" = ["T20"]  # scripts pueden usar print
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+# =============================================================================
+# MYPY — type checking strict
+# =============================================================================
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+plugins = ["pydantic.mypy"]
+exclude = ["alembic/versions/", "tests/fixtures/"]
+
+[[tool.mypy.overrides]]
+module = ["selectolax.*", "apscheduler.*"]
+ignore_missing_imports = true
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+
+# =============================================================================
+# PYTEST
+# =============================================================================
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+    "--showlocals",
+]
+markers = [
+    "unit: tests unitarios sin BD ni red",
+    "integration: tests con BD de test",
+    "slow: tests lentos (>1s)",
+]
+
+# =============================================================================
+# COVERAGE
+# =============================================================================
+[tool.coverage.run]
+source = ["app"]
+omit = [
+    "app/main.py",
+    "alembic/*",
+    "tests/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+]
+show_missing = true
+skip_covered = false
+fail_under = 70

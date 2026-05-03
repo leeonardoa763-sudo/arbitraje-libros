@@ -1,0 +1,25 @@
+repos:
+  # Ruff: lint + autofix + format
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.7.1
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  # Mypy: type checking usando el venv del proyecto (uv)
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        language: system
+        entry: uv run mypy
+        args: [app/]
+        types: [python]
+        pass_filenames: false
+
+  # Secretos: no commitear credenciales accidentalmente
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks

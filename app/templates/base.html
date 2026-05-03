@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Arbitraje de Libros{% endblock %}</title>
+    <!-- Tailwind CSS via CDN (Sprint 6: mover a build local) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"
+            integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5ViYgSibmK"
+            crossorigin="anonymous"></script>
+    {% block head %}{% endblock %}
+</head>
+<body class="bg-gray-50 text-gray-900 min-h-screen">
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between">
+        <span class="font-semibold text-lg">📚 Arbitraje de Libros</span>
+        <div class="flex gap-4 text-sm text-gray-600">
+            <a href="/" class="hover:text-gray-900">Oportunidades</a>
+            <a href="/api/docs" class="hover:text-gray-900">API Docs</a>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>
