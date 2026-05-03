@@ -6,6 +6,18 @@ Versiones siguen [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Agregado — Sprint 3: Metadata Service
+
+- `app/services/book_metadata.py`: servicio completo de metadata con `GoogleBooksClient` y `OpenLibraryClient`
+- `BookMetadata` dataclass como modelo de transferencia normalizado (agnóstico a la fuente)
+- `GoogleBooksClient`: cliente async para la API de Google Books con retry tenacity (3 intentos, backoff exponencial), timeout 10 s, inyección de `api_key` opcional
+- `OpenLibraryClient`: cliente async para Open Library (fallback) con misma estrategia de retry
+- `BookMetadataService.fetch_by_isbn()`: orquesta Google Books → Open Library, normaliza ISBN-10/13, lanza `BookMetadataNotFoundError` si ambas fuentes fallan
+- Clasificación de categoría por keyword-matching (`_classify_category`) contra TECH / MEDICINE / LAW / BUSINESS
+- Extracción de año desde formatos de fecha heterogéneos (`_parse_year`)
+- 4 fixtures JSON en `tests/fixtures/` (respuestas reales de ambas APIs, casos found/not-found)
+- 29 tests unitarios nuevos en `tests/unit/test_book_metadata.py` (cobertura `book_metadata.py`: 94%)
+
 ### Agregado — Sprint 2: Core Utilities
 
 - `app/core/isbn.py`: validación ISBN-10/ISBN-13 con checksum, conversión bidireccional, normalización a ISBN-13 canónico y extracción de ISBNs desde texto libre con regex

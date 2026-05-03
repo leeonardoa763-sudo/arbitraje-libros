@@ -1,0 +1,35 @@
+{
+  "ISBN:9780596517748": {
+    "url": "https://openlibrary.org/books/OL10535682M/JavaScript",
+    "key": "/books/OL10535682M",
+    "title": "JavaScript",
+    "subtitle": "The Good Parts",
+    "authors": [
+      {
+        "url": "https://openlibrary.org/authors/OL1392209A/Douglas_Crockford",
+        "name": "Douglas Crockford"
+      }
+    ],
+    "number_of_pages": 172,
+    "identifiers": {
+      "goodreads": ["2998152"],
+      "librarything": ["3517786"],
+      "isbn_10": ["0596517742"],
+      "isbn_13": ["9780596517748"],
+      "openlibrary": ["OL10535682M"]
+    },
+    "publishers": [
+      {"name": "O'Reilly Media"}
+    ],
+    "publish_date": "2008",
+    "subjects": [
+      {"url": "https://openlibrary.org/subjects/javascript", "name": "JavaScript (Programming language)"},
+      {"url": "https://openlibrary.org/subjects/web_programming", "name": "Web programming"}
+    ],
+    "cover": {
+      "small": "https://covers.openlibrary.org/b/id/8091016-S.jpg",
+      "medium": "https://covers.openlibrary.org/b/id/8091016-M.jpg",
+      "large": "https://covers.openlibrary.org/b/id/8091016-L.jpg"
+    }
+  }
+}
