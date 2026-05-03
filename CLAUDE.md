@@ -510,11 +510,11 @@ Cada sprint = una rama feature, idealmente 1 PR por sub-tarea.
 - [x] Alembic configurado, primera migración
 - [x] Tests de modelos con factory_boy o factories propias
 
-### Sprint 2: Core utilities
+### Sprint 2: Core utilities ✓
 
-- [ ] `core/isbn.py` con validación + conversión + tests exhaustivos
-- [ ] `core/money.py` con helpers + tests
-- [ ] `core/exceptions.py` con jerarquía del dominio
+- [x] `core/isbn.py` con validación + conversión + tests exhaustivos
+- [x] `core/money.py` con helpers + tests
+- [x] `core/exceptions.py` con jerarquía del dominio
 
 ### Sprint 3: Metadata service
 
@@ -654,5 +654,5 @@ Cada sprint = una rama feature, idealmente 1 PR por sub-tarea.
 
 ---
 
-**Última actualización:** Sprint 0 (estructura inicial)
+**Última actualización:** Sprint 2 (core utilities: isbn.py, money.py, exceptions.py)
 **Versión del CLAUDE.md:** 1.0
