@@ -164,9 +164,7 @@ class TestOpportunityModel:
         assert Opportunity.__tablename__ == "opportunities"
 
     def test_constraint_deduplicacion_definida(self) -> None:
-        constraint_names = {
-            c.name for c in Opportunity.__table_args__ if hasattr(c, "name")
-        }
+        constraint_names = {c.name for c in Opportunity.__table_args__ if hasattr(c, "name")}
         assert "uq_opportunity_dedup" in constraint_names
 
 

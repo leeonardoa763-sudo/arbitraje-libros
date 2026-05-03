@@ -13,9 +13,7 @@ class BookBase(BaseModel):
     """Campos compartidos entre creación y lectura de un libro."""
 
     isbn_13: str = Field(..., min_length=13, max_length=13, pattern=r"^\d{13}$")
-    isbn_10: str | None = Field(
-        default=None, min_length=10, max_length=10, pattern=r"^\d{9}[\dX]$"
-    )
+    isbn_10: str | None = Field(default=None, min_length=10, max_length=10, pattern=r"^\d{9}[\dX]$")
     title: str = Field(..., min_length=1, max_length=500)
     authors: list[Any] = Field(default_factory=list)
     publisher: str | None = None

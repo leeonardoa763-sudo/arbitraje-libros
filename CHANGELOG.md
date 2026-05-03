@@ -6,6 +6,13 @@ Versiones siguen [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Agregado — Sprint 2: Core Utilities
+
+- `app/core/isbn.py`: validación ISBN-10/ISBN-13 con checksum, conversión bidireccional, normalización a ISBN-13 canónico y extracción de ISBNs desde texto libre con regex
+- `app/core/money.py`: helpers de centavos — `pesos_to_cents`, `cents_to_pesos`, `format_mxn` (formato `$1,234.56 MXN`), `calculate_margin_pct`
+- 100 tests nuevos en `tests/unit/test_isbn.py`, `tests/unit/test_money.py`, `tests/unit/test_exceptions.py` (162 total)
+- Regla de redondeo ROUND_HALF_UP en `pesos_to_cents` para evitar truncado silencioso
+
 ### Agregado — Sprint 1: Modelos y Schemas
 
 - Modelos SQLAlchemy 2.0 async: `Book`, `Opportunity`, `Publication`, `PriceHistory`
