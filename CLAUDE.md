@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 > **Lee este archivo COMPLETO al inicio de cada sesión.** Define cómo trabajamos en este proyecto.
-> El programador eres tú (Claude Code). El supervisor es Leo. Tu trabajo es entregar código que pase CI y que Leo pueda revisar en PRs pequeños.
+> El programador eres tú eres experto en escribir codigo limpio y con excelente manejo de errores(Claude Code). El supervisor es Leo. Tu trabajo es entregar código que pase CI y que Leo pueda revisar en PRs pequeños.
 
 ---
 
@@ -32,30 +32,30 @@ Si Leo pide algo de esta lista, **detente y confirma** antes de implementarlo.
 
 Estas decisiones ya se tomaron. **No propongas cambiarlas a menos que Leo lo pida explícitamente.** Si una nueva tarea entra en conflicto con una decisión, detente y pregunta.
 
-| Decisión | Elegido | Por qué |
-|----------|---------|---------|
-| Lenguaje | Python 3.12+ | Estándar moderno |
-| Web framework | FastAPI | Async nativo, validación con Pydantic, OpenAPI |
-| ORM | SQLAlchemy 2.0 **async** | Eficiencia para scraping concurrente |
-| BD | PostgreSQL 16+ | Robusto, gratis en Railway |
-| Migraciones | Alembic | Estándar con SQLAlchemy |
-| Validación | Pydantic v2 | Estricto, rápido |
-| Templates | Jinja2 + HTMX + Tailwind | Sin SPA, dashboard interno |
-| Tareas programadas | APScheduler embebido | No necesitamos Celery para 1 usuario |
-| HTTP client | httpx async | Moderno |
-| Scraping | httpx + selectolax (más rápido que BS4) | Performance |
-| IA | Anthropic Claude API | `claude-sonnet-4-6` por default |
-| Auth | HTTP Basic + secret en `.env` | 1 usuario, máxima simplicidad |
-| Logging | structlog (JSON) | Logs parseables, observable |
-| Gestor de paquetes | **uv** | 10-100x más rápido que pip |
-| Lint + format | **ruff** | Reemplaza black + flake8 + isort |
-| Type checker | **mypy strict mode** | Catch errors temprano |
-| Testing | pytest + pytest-asyncio + coverage | Estándar |
-| Pre-commit | pre-commit + ruff + mypy | No commitear basura |
-| CI/CD | GitHub Actions | Gratis, integrado |
-| Containerización | Docker + docker-compose | Reproducibilidad |
-| Deploy | Railway | Gratis, soporta BD + scheduler |
-| Versionado | Conventional Commits | Changelog automático |
+| Decisión           | Elegido                                 | Por qué                                        |
+| ------------------ | --------------------------------------- | ---------------------------------------------- |
+| Lenguaje           | Python 3.12+                            | Estándar moderno                               |
+| Web framework      | FastAPI                                 | Async nativo, validación con Pydantic, OpenAPI |
+| ORM                | SQLAlchemy 2.0 **async**                | Eficiencia para scraping concurrente           |
+| BD                 | PostgreSQL 16+                          | Robusto, gratis en Railway                     |
+| Migraciones        | Alembic                                 | Estándar con SQLAlchemy                        |
+| Validación         | Pydantic v2                             | Estricto, rápido                               |
+| Templates          | Jinja2 + HTMX + Tailwind                | Sin SPA, dashboard interno                     |
+| Tareas programadas | APScheduler embebido                    | No necesitamos Celery para 1 usuario           |
+| HTTP client        | httpx async                             | Moderno                                        |
+| Scraping           | httpx + selectolax (más rápido que BS4) | Performance                                    |
+| IA                 | Anthropic Claude API                    | `claude-sonnet-4-6` por default                |
+| Auth               | HTTP Basic + secret en `.env`           | 1 usuario, máxima simplicidad                  |
+| Logging            | structlog (JSON)                        | Logs parseables, observable                    |
+| Gestor de paquetes | **uv**                                  | 10-100x más rápido que pip                     |
+| Lint + format      | **ruff**                                | Reemplaza black + flake8 + isort               |
+| Type checker       | **mypy strict mode**                    | Catch errors temprano                          |
+| Testing            | pytest + pytest-asyncio + coverage      | Estándar                                       |
+| Pre-commit         | pre-commit + ruff + mypy                | No commitear basura                            |
+| CI/CD              | GitHub Actions                          | Gratis, integrado                              |
+| Containerización   | Docker + docker-compose                 | Reproducibilidad                               |
+| Deploy             | Railway                                 | Gratis, soporta BD + scheduler                 |
+| Versionado         | Conventional Commits                    | Changelog automático                           |
 
 ### Decisiones específicas del dominio
 
@@ -174,6 +174,7 @@ arbitraje-libros/
 ## 🧱 Modelo de datos
 
 ### `books`
+
 Catálogo único de libros normalizado por ISBN-13.
 
 ```python
@@ -192,6 +193,7 @@ updated_at: datetime
 ```
 
 ### `opportunities`
+
 Cada vez que detecto un libro candidato.
 
 ```python
@@ -215,6 +217,7 @@ expires_at: datetime
 ```
 
 ### `publications`
+
 Cuando publico una oportunidad en ML.
 
 ```python
@@ -232,6 +235,7 @@ final_margin_cents: int | None         # Margen real cuando se vende
 ```
 
 ### `price_history`
+
 Histórico de precios (para tendencias).
 
 ```python
@@ -248,17 +252,20 @@ seen_at: datetime
 ## 📐 Coding Standards (estricto)
 
 ### Type hints
+
 - **Toda función pública** debe tener type hints en parámetros y retorno.
 - Usa `from __future__ import annotations` en cada archivo.
 - `mypy --strict` debe pasar. Si no pasa, el código no se mergea.
 
 ### Naming
+
 - **Variables, funciones, clases en inglés.** Ejemplo: `calculate_net_margin`, `BookMetadata`.
 - **Comentarios y docstrings en español.** Ejemplo: `"""Calcula el margen neto de una oportunidad."""`.
 - **UI / textos visibles en español.** Es un proyecto personal de Leo en México.
 - **Nombres descriptivos.** `data` no es un nombre. `ml_listing` sí.
 
 ### Docstrings
+
 Estilo Google. Obligatorios en funciones públicas y clases:
 
 ```python
@@ -285,18 +292,21 @@ def calculate_net_margin(
 ```
 
 ### Manejo de errores
+
 - **Excepciones específicas siempre.** Nunca `except Exception:` salvo en el top level con logging.
 - Define excepciones custom en `app/core/exceptions.py` por dominio:
   - `MercadoLibreAPIError`, `BookMetadataNotFoundError`, `InvalidISBNError`, etc.
 - Los servicios externos (ML, Google Books, Anthropic) **siempre** dentro de try/except específico, con log estructurado, y reintentos con backoff (usa `tenacity`).
 
 ### Async
+
 - Todos los endpoints FastAPI son `async def`.
 - Toda llamada a BD usa `AsyncSession`.
 - Toda llamada HTTP usa `httpx.AsyncClient`.
 - No mezclar sync y async (no `requests.get` en código async).
 
 ### Dinero
+
 - **Siempre `int` en centavos.** Nunca `float`. Nunca `Decimal` en BD (sí en cálculos intermedios).
 - Helpers en `app/core/money.py`:
   ```python
@@ -306,11 +316,13 @@ def calculate_net_margin(
   ```
 
 ### Logging
+
 - Usa `structlog`, nunca `print` ni `logging` directo.
 - Estructura: `logger.info("event_name", key1=value1, key2=value2)`.
 - Eventos importantes a loggear: cada scraping run, cada oportunidad detectada, cada llamada a ML/Anthropic, cada error.
 
 ### Imports
+
 - Orden (ruff lo hace automático): stdlib → terceros → primera-parte (`app.*`) → relativos.
 - No uses imports relativos profundos (`from ...services`). Usa absolutos (`from app.services`).
 
@@ -372,6 +384,7 @@ pre-commit run --all-files
 Formato: `<type>(<scope>): <descripción en español>`
 
 Tipos permitidos:
+
 - `feat`: nueva funcionalidad
 - `fix`: corrección de bug
 - `refactor`: cambio de código sin cambiar comportamiento
@@ -382,6 +395,7 @@ Tipos permitidos:
 - `ci`: cambios en CI/CD
 
 Ejemplos:
+
 ```
 feat(scraper): agregar extracción de ISBN desde imágenes de portada
 fix(margin): corregir cálculo de IVA en envíos a frontera
@@ -431,15 +445,18 @@ Si una tarea da más de 400 líneas, **divídela** en sub-tareas y crea PRs enca
 Tres usos concretos. Si Leo pide más, evalúa primero si vale la pena el costo de tokens.
 
 ### 1. `opportunity_evaluator`
+
 Input: libro + precio actual + categoría + histórico de precios.
 Output: `{ "score": 0-100, "reasoning": "...", "risks": [...] }`.
 Ejemplo: "Edición vieja de un libro técnico, demanda baja, score 35".
 
 ### 2. `listing_generator`
+
 Input: libro (título, autor, año, descripción cruda).
 Output: `{ "title": "...", "description": "...", "tags": [...] }` optimizado para SEO de ML.
 
 ### 3. `category_classifier`
+
 Input: título + descripción.
 Output: categoría interna del proyecto (TECH, MEDICINE, etc.).
 
@@ -475,6 +492,7 @@ Validación: `app/config.py` usa `pydantic_settings.BaseSettings` y **falla al a
 Cada sprint = una rama feature, idealmente 1 PR por sub-tarea.
 
 ### Sprint 0: Foundation
+
 - [ ] `pyproject.toml` con uv, ruff, mypy, pytest configurados
 - [ ] Pre-commit hooks instalados
 - [ ] FastAPI con `/health` y `/version`
@@ -484,36 +502,42 @@ Cada sprint = una rama feature, idealmente 1 PR por sub-tarea.
 - [ ] Docker + docker-compose con Postgres
 - [ ] GitHub Actions con lint + typecheck + tests
 
-### Sprint 1: Modelos y migraciones
-- [ ] DeclarativeBase + TimestampMixin
-- [ ] Modelos: Book, Opportunity, Publication, PriceHistory
-- [ ] Schemas Pydantic correspondientes
-- [ ] Alembic configurado, primera migración
-- [ ] Tests de modelos con factory_boy o factories propias
+### Sprint 1: Modelos y migraciones ✓
+
+- [x] DeclarativeBase + TimestampMixin
+- [x] Modelos: Book, Opportunity, Publication, PriceHistory
+- [x] Schemas Pydantic correspondientes
+- [x] Alembic configurado, primera migración
+- [x] Tests de modelos con factory_boy o factories propias
 
 ### Sprint 2: Core utilities
+
 - [ ] `core/isbn.py` con validación + conversión + tests exhaustivos
 - [ ] `core/money.py` con helpers + tests
 - [ ] `core/exceptions.py` con jerarquía del dominio
 
 ### Sprint 3: Metadata service
+
 - [ ] Cliente Google Books con retry + timeout
 - [ ] Cliente Open Library como fallback
 - [ ] Servicio `book_metadata.py` con normalización
 - [ ] Tests con fixtures reales (en `tests/fixtures/`)
 
 ### Sprint 4: Scraping ML
+
 - [ ] `scrapers/base.py`: rate limiter + rotación UA + respeto robots.txt
 - [ ] `scrapers/mercadolibre.py`: extracción de listados
 - [ ] Heurística de extracción de ISBN (título → descripción → fallback)
 - [ ] Tests con HTML fixtures de ML
 
 ### Sprint 5: Cálculo de margen
+
 - [ ] `services/ml_commissions.py`: tabla parametrizada por categoría/modalidad
 - [ ] `services/margin_calculator.py` con tests exhaustivos (incluir IVA, frontera, etc.)
 - [ ] Integración: scraper → metadata → margen → opportunity
 
 ### Sprint 6: Dashboard
+
 - [ ] Layout base Tailwind + HTMX
 - [ ] Lista de oportunidades paginada con filtros (status, categoría, margen mínimo)
 - [ ] Detalle de oportunidad
@@ -521,6 +545,7 @@ Cada sprint = una rama feature, idealmente 1 PR por sub-tarea.
 - [ ] Tests E2E con httpx
 
 ### Sprint 7: IA
+
 - [ ] Cliente Anthropic con retry y logging de tokens
 - [ ] `opportunity_evaluator` con tool_use estructurado
 - [ ] `listing_generator`
@@ -528,12 +553,14 @@ Cada sprint = una rama feature, idealmente 1 PR por sub-tarea.
 - [ ] Botón en dashboard "Evaluar con IA"
 
 ### Sprint 8: Scheduler + Deploy
+
 - [ ] APScheduler con job cada `SCAN_INTERVAL_HOURS`
 - [ ] Lifespan handler de FastAPI
 - [ ] Deploy en Railway
 - [ ] Logs accesibles, healthchecks
 
 ### Sprint 9: Integración ML (cuando Leo tenga app aprobada)
+
 - [ ] OAuth flow ML
 - [ ] `ml_publisher` con creación de items
 - [ ] Botón "Publicar" en dashboard
@@ -541,6 +568,7 @@ Cada sprint = una rama feature, idealmente 1 PR por sub-tarea.
 - [ ] Tests con respuestas mockeadas
 
 ### Sprint 10: Hardening
+
 - [ ] Coverage mínimo 70% en `services/`
 - [ ] Healthchecks + métricas básicas (Prometheus opcional)
 - [ ] Runbook con troubleshooting común
@@ -551,23 +579,27 @@ Cada sprint = una rama feature, idealmente 1 PR por sub-tarea.
 ## 🎓 Reglas operacionales para Claude Code
 
 ### Al inicio de cada sesión
+
 1. **Lee este `CLAUDE.md` completo.**
 2. Lee `CHANGELOG.md` para saber qué se hizo recientemente.
 3. Si vas a tocar un módulo, **lee primero los tests existentes** de ese módulo.
 4. Pregunta a Leo qué tarea atacar si no está claro.
 
 ### Antes de escribir código
+
 1. Identifica si la tarea afecta una decisión arquitectónica cerrada.
 2. Si va a haber cambio de modelo, planea la migración.
 3. Si vas a agregar dependencia, justifica por qué.
 4. Si la tarea es grande (>400 líneas estimadas), **divídela** en sub-tareas y propone el plan a Leo.
 
 ### Mientras escribes código
+
 1. Tipado estricto, docstrings, sin `print`.
 2. Tests junto con el código (TDD opcional, tests obligatorio).
 3. Si descubres que necesitas hacer algo no planeado, **detente y pregunta**.
 
 ### Antes de cerrar
+
 1. Corre todos los verification commands.
 2. Actualiza `CHANGELOG.md` si aplica.
 3. Crea ADR si tomaste decisión arquitectónica nueva.
@@ -575,14 +607,17 @@ Cada sprint = una rama feature, idealmente 1 PR por sub-tarea.
 5. Crea PR con plantilla llena.
 
 ### Cuando algo no está claro
+
 **Pregunta a Leo.** No inventes. Es preferible una pausa para clarificar que un PR de 500 líneas que hay que tirar.
 
 ### Cuando un test falla
+
 1. **No deshabilites el test** para hacer pasar el código.
 2. Entiende por qué falla.
 3. Decide si el test está mal o el código está mal, y arregla la causa raíz.
 
 ### Cuando un servicio externo cambia
+
 1. Aísla el cambio en su capa (cliente HTTP).
 2. Actualiza fixtures de tests.
 3. Documenta el cambio en `CHANGELOG.md`.
